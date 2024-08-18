@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
@@ -24,7 +25,6 @@ import { AuthModule } from './auth/auth.module';
         synchronize: true,
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
       }),
-      inject: [ConfigService],
     }),
     UserModule,
     QuizModule,
